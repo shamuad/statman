@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration.Abstractions;
+using log4net;
 using Nancy.Hosting.Self;
 
 namespace Statman.Api.Config
@@ -6,11 +8,11 @@ namespace Statman.Api.Config
     public class NancySelfHost : IDisposable
     {
         private NancyHost nancyHost;
+        private readonly ApiSettings settings = ConfigurationManager.Instance.AppSettings.Map<ApiSettings>();
+        private readonly ILog logger = LogManager.GetLogger(typeof(NancySelfHost));
 
         public void Start()
         {
-            var uri = new Uri("http://localhost:1973");
-
             var hostConfiguration = new HostConfiguration()
             {
                 UrlReservations = new UrlReservations()
@@ -21,7 +23,9 @@ namespace Statman.Api.Config
 
             var bootstrapper = new Bootstrapper();
 
-            nancyHost = new NancyHost(bootstrapper, hostConfiguration, new Uri[] { uri });
+            nancyHost = new NancyHost(bootstrapper, hostConfiguration, new Uri(settings.Url));
+
+            logger.InfoFormat("Statman is starting on " + settings.Url);
             nancyHost.Start();
         }
 

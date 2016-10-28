@@ -8,8 +8,6 @@ namespace Statman.Api
     {
         public static void Main(string[] args)
         {
-            var settings = ConfigurationManager.Instance.AppSettings.Map<ApiSettings>();
-
             HostFactory.Run(config =>
             {
                 config.Service<NancySelfHost>(selfHost =>
@@ -19,9 +17,9 @@ namespace Statman.Api
                     selfHost.WhenStopped(s => s.Stop());
                 });
 
-                config.SetServiceName("Statman Service");
-                config.SetDisplayName("Nancy Statman Service");
-                config.SetDescription("Statman Service Tutorial");
+                config.SetServiceName("Statman.Api");
+                config.SetDisplayName("Statman");
+                config.SetDescription("Statman Service for monitoring servers and services");
             });
         }
     }
