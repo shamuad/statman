@@ -23,6 +23,4 @@ namespace Statman.Api
             });
         }
     }
-
-
 }

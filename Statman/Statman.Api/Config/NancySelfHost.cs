@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration.Abstractions;
 using log4net;
+using log4net.Config;
 using Nancy.Hosting.Self;
 
 namespace Statman.Api.Config
@@ -13,6 +14,8 @@ namespace Statman.Api.Config
 
         public void Start()
         {
+            XmlConfigurator.Configure();
+
             var hostConfiguration = new HostConfiguration()
             {
                 UrlReservations = new UrlReservations()
@@ -25,12 +28,13 @@ namespace Statman.Api.Config
 
             nancyHost = new NancyHost(bootstrapper, hostConfiguration, new Uri(settings.Url));
 
-            logger.InfoFormat("Statman is starting on " + settings.Url);
+            logger.InfoFormat("Statman is going to start on " + settings.Url);
             nancyHost.Start();
         }
 
         public void Stop()
         {
+            logger.InfoFormat("Statman is going to stop on " + settings.Url);
             nancyHost.Stop();
         }
 
