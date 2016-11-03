@@ -1,6 +1,7 @@
 ﻿using System.Configuration.Abstractions;
 using Statman.Api.Config;
 using Topshelf;
+using Statman.Api.Client;
 
 namespace Statman.Api
 {
